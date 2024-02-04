@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "698598784277",
+    "firebase_url": "https://foodapp-bf4ec-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "foodapp-bf4ec",
+    "storage_bucket": "foodapp-bf4ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698598784277:android:9b04c2bce86bfa120e3d1c",
+        "android_client_info": {
+          "package_name": "com.example.appfoodpad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXbhxq3CkWH_qKWonqW9vkM9sxRKgEPoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698598784277:android:91ab8d42437185770e3d1c",
+        "android_client_info": {
+          "package_name": "com.example.test1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXbhxq3CkWH_qKWonqW9vkM9sxRKgEPoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
