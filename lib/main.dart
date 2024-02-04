@@ -1,4 +1,3 @@
-import 'package:appfoodpad/timer.dart';
 import 'package:appfoodpad/views/home_screen.dart';
 
 import 'views/splash_screen.dart'; //
