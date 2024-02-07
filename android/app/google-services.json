@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "378733191028",
+    "firebase_url": "https://foodpad-41758-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "foodpad-41758",
+    "storage_bucket": "foodpad-41758.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378733191028:android:63dd65c9d901dd440a9621",
+        "android_client_info": {
+          "package_name": "com.example.food_pad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCazID6rZukY4Pk2FuIShvGHzv2OyFBH0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

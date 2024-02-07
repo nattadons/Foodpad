@@ -1,0 +1,4 @@
+bool isSigned = await _googleSignIn.isSignedIn();
+    if(isSigned){
+      await _googleSignIn.signOut();
+    }
