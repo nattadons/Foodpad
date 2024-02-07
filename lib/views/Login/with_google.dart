@@ -31,3 +31,8 @@ Future<UserCredential?> signInWithGoogle() async {
     return null;
   }
 }
+
+Future<void> signOutFromGoogle() async{
+  await _googleSignIn.signOut();
+  await _auth.signOut();
+}

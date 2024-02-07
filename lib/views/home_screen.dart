@@ -1,7 +1,9 @@
 // home_screen.dart
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
+import 'Login/with_google.dart';
 import 'widgets/recipe_card.dart';
 import '../models/recipe.dart';
 
@@ -17,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Global variable to store recipes from FirebaseAnimatedList
   late List<Recipe> recipes;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -65,9 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {
-            // Handle hamburger menu
-          },
+          onPressed: () {},
         ),
         actions: [
           Container(
@@ -75,11 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
             ),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://cdn-icons-png.flaticon.com/512/10337/10337609.png',
-              ),
+            child: ElevatedButton(
+              onPressed: () async {
+                // ทำการ signout
+                await signOutFromGoogle();
+
+                // เปลี่ยนหน้าไปยังหน้า login หรือหน้าที่คุณต้องการ
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+              child: Text('Sign Out'),
             ),
+          ), // Removed extra child property here
+          CircleAvatar(
+            backgroundImage: NetworkImage(user!.photoURL!),
           ),
         ],
       ),
@@ -169,7 +179,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   void navigateToOtherScreen(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 }

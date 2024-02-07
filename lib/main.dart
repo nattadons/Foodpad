@@ -1,3 +1,5 @@
+import 'package:food_pad/views/login.dart';
+
 import 'models/recipe.dart';
 import 'views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,9 @@ class MyApp extends StatelessWidget {
           return HomeScreen(); // หรือตัวอื่น ๆ ที่คุณต้องการ
         },
         // เพิ่มเส้นทางอื่น ๆ ที่คุณต้องการในนี้
+        "/login": (context) {
+          return LoginScreen(); // หรือตัวอื่น ๆ ที่คุณต้องการ
+        },
       },
     );
   }
