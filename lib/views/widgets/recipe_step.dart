@@ -141,7 +141,7 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
       appBar: AppBar(
         title: Text(
           'Cooking Steps',
-          style: TextStyle(color: Color.fromARGB(255, 54, 52, 52)),
+          style: TextStyle(color: Color.fromARGB(255, 66, 61, 61)),
         ),
         leading: IconButton(
           icon: Icon(
@@ -304,19 +304,23 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                     ElevatedButton(
                       onPressed: () {
                         if (currentStepIndex <
-                                widget.recipe.process.length - 1 &&
-                            countdown == 0) {
-                          setState(() {
-                            currentStepIndex++;
-                            countdown =
-                                widget.recipe.process[currentStepIndex].timer;
-                            score += 100;
-                          });
+                            widget.recipe.process.length - 1) {
+                          if (countdown == 0) {
+                            setState(() {
+                              currentStepIndex++;
+                              countdown =
+                                  widget.recipe.process[currentStepIndex].timer;
+                              score += 100;
+                            });
+                            startCountdown();
+                          }
                         } else if (currentStepIndex ==
                                 widget.recipe.process.length - 1 &&
                             countdown == 0) {
-                          showSubmitDialog();
-                          score += 100;
+                          setState(() {
+                            showSubmitDialog();
+                            score += 100;
+                          });
                         }
                       },
                       style: ElevatedButton.styleFrom(
