@@ -1,4 +1,5 @@
 import 'recipe_step.dart';
+import 'recipe_score.dart';
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
 // recipe_details.dart
@@ -182,12 +183,23 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             // ส่วนที่ 3: รูปภาพ 2
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Image.asset(
-                  'assets/img/score_icon.png',
-                  height: 40,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        RecipeScoreScreen(recipe: widget.recipe),
+                  ),
+                );
+              },
+              child: Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Image.asset(
+                    'assets/img/score_icon.png',
+                    height: 40,
+                  ),
                 ),
               ),
             ),

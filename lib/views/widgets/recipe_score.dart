@@ -1,0 +1,92 @@
+import '../../models/recipe.dart';
+import 'package:flutter/material.dart';
+
+class RecipeScoreScreen extends StatelessWidget {
+  final Recipe recipe;
+
+  const RecipeScoreScreen({Key? key, required this.recipe}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(recipe.title),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // เพิ่มรูปภาพด้านบนสุด
+            Image.network(
+              recipe.imageUrl,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+            // ต่อด้วยส่วนอื่น ๆ ของหน้า
+            ListView.builder(
+              physics:
+                  NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
+              shrinkWrap: true,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return _buildScoreCard(context, recipe);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScoreCard(BuildContext context, Recipe recipe) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              // รูปโปรไฟล์ของผู้ใช้
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/img/profile_picture.png'),
+                radius: 25,
+              ),
+              SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ชื่อผู้ใช้
+                  Text(
+                    'User Name',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  // คะแนน
+                  Text(
+                    'Score: 9.5',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              // ตำแหน่งของคะแนน
+              Text(
+                '#1', // ตำแหน่งของผู้ให้คะแนน
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

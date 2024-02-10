@@ -1,11 +1,11 @@
-import 'package:food_pad/views/login.dart';
-
 import 'models/recipe.dart';
 import 'views/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:food_pad/views/login.dart';
 import 'package:food_pad/views/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:food_pad/views/widgets/recipe_details.dart';
+
 
 // main.dart
 
