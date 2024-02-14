@@ -4,8 +4,6 @@ import 'widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-// home_screen.dart
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,7 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Recipe> filteredRecipes = [];
   late Recipe recipe;
 
-  // Global variable to store recipes from FirebaseAnimatedList
   late List<Recipe> recipes;
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -67,31 +64,52 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-        ),
         actions: [
-          Container(
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(user!.photoURL!),
             ),
-            child: ElevatedButton(
-              onPressed: () async {
-                // ทำการ signout
-                await signOutFromGoogle();
-
-                // เปลี่ยนหน้าไปยังหน้า login หรือหน้าที่คุณต้องการ
-                Navigator.pushReplacementNamed(context, '/login');
-              },
-              child: Text('Sign Out'),
-            ),
-          ), // Removed extra child property here
-          CircleAvatar(
-            backgroundImage: NetworkImage(user!.photoURL!),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.orange,
+              ),
+              child: Text(
+                user!.displayName ?? 'Guest',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Profile Cooking'),
+              onTap: () {
+                // Handle item 1
+              },
+            ),
+            ListTile(
+              title: Text('Post Recipe'),
+              onTap: () {
+                // Handle item 2
+              },
+            ),
+            ListTile(
+              title: Text('Sign Out'),
+              onTap: () async {
+                await signOutFromGoogle();
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -126,18 +144,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 onChanged: (query) {
                   setState(() {
                     filteredRecipes = recipes.where((recipe) {
-                      // Check if the recipe title contains the query
                       bool titleContainsQuery = recipe.title
                           .toLowerCase()
                           .contains(query.toLowerCase());
 
-                      // Check if any ingredient name contains the query
                       bool ingredientContainsQuery = recipe.ingredients.any(
                           (ingredient) => ingredient.name
                               .toLowerCase()
                               .contains(query.toLowerCase()));
 
-                      // Return true if either title or ingredient name contains the query
                       return titleContainsQuery || ingredientContainsQuery;
                     }).toList();
                   });
