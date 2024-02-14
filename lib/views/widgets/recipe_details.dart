@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+
 import 'recipe_step.dart';
 import 'recipe_score.dart';
 import '../../models/recipe.dart';
@@ -14,6 +16,68 @@ class RecipeDetailsScreen extends StatefulWidget {
 }
 
 class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+
+  late Recipe recipe;
+
+  late List<Recipe> recipes;
+
+  @override
+  void initState() {
+    super.initState();
+    recipes = [];
+
+    DatabaseReference reference =
+    FirebaseDatabase.instance.reference().child('recipes');
+
+    reference.onChildAdded.listen((event) {
+      Map<dynamic, dynamic> values = event.snapshot.value as Map;
+
+      List<Ingredient> ingredients = [];
+      for (var ingredient in values['ingredients']) {
+        ingredients.add(Ingredient(
+          name: ingredient['name'],
+          quantity: ingredient['quantity'],
+        ));
+      }
+
+      List<Process> process = [];
+      for (var step in values['process']) {
+        process.add(Process(
+          name: step['name'],
+          timer: step['timer'],
+        ));
+      }
+
+      List<Score> score = [];
+      if (values['score'] != null) {
+        values['score'].forEach((key, data) {
+          score.add(Score(
+            key: key,
+            id: data['id'],
+            name: data['name'],
+            profileUrl: data['profile_img'],
+            scores: data['scores'],
+          ));
+        });
+      }
+
+
+      Recipe recipe = Recipe(
+        key: event.snapshot.key ?? '',
+        title: values['title'],
+        description: values['description'],
+        imageUrl: values['imageUrl'],
+        ingredients: ingredients,
+        process: process,
+        score: score,
+      );
+
+      setState(() {
+        recipes.add(recipe);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,8 @@
 import 'dart:async';
+import 'dart:ffi';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +21,8 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
   int score = 0;
   late int countdown;
   late Timer timer;
+  final databaseReference = FirebaseDatabase.instance.reference();
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -44,6 +50,62 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
     });
 
     print("Start countdown for 10 seconds...");
+  }
+
+  void addRecipeScore() async {
+    // Replace 'your_recipe_description' with the actual description of the recipe in your Firebase Database
+    String recipeDescription = widget.recipe.key;
+
+    //List<Map<String, dynamic>> score = [];
+    //databaseReference.child('recipes/$recipeDescription').push().set(score);
+    // Replace with actual data
+    Map<String, dynamic> scoreData = {
+      'id': user!.uid!,
+      'profile_img': user!.photoURL!,
+      'name': user!.displayName!,
+      'scores': score,
+    };
+
+    DatabaseReference reference = FirebaseDatabase.instance
+        .reference()
+        .child('recipes/$recipeDescription/score');
+    try {
+      reference.once().then((DatabaseEvent event) {
+        DataSnapshot snapshot = event.snapshot;
+        // ตรวจสอบว่ามีข้อมูลหรือไม่
+        if (snapshot.value != null) {
+          // ได้รับข้อมูล
+          Map<dynamic, dynamic> values = snapshot.value as Map;
+
+          bool check = false;
+          for (var entry in values.entries) {
+            var key = entry.key;
+            var value = entry.value;
+            print('$key: $value');
+            var score_ = value['scores'];
+            var id = value['id'];
+            print('คะแนน: $score_');
+            if (id == user!.uid!) {
+              check = true;
+              if (score > score_) {
+                print("id == user!.uid!");
+                print(id == user!.uid!);
+                reference.child(key).update(scoreData);
+              }
+            }
+          }
+          if(check == false){
+            reference.push().set(scoreData);
+          }
+        } else {
+          print('ไม่มีข้อมูล');
+          reference.push().set(scoreData);
+        }
+      });
+    } catch (error) {
+      print('เกิดข้อผิดพลาด: $error');
+    }
+    //databaseReference.child('recipes/$recipeDescription/score').push().set(scoreData);
   }
 
   void showSubmitDialog() {
@@ -111,6 +173,7 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
             actions: [
               TextButton(
                 onPressed: () {
+                  addRecipeScore();
                   Navigator.pop(context); // Pop RecipeStepScreen
                   Navigator.pushReplacementNamed(context, '/recipe_details',
                       arguments: widget.recipe);

@@ -1,16 +1,23 @@
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
 
-class RecipeScoreScreen extends StatelessWidget {
+class RecipeScoreScreen extends StatefulWidget {
   final Recipe recipe;
 
   const RecipeScoreScreen({Key? key, required this.recipe}) : super(key: key);
 
   @override
+  State<RecipeScoreScreen> createState() => _RecipeScoreScreenState();
+}
+
+class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipe.title),
+        title: Text(widget.recipe.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -18,18 +25,18 @@ class RecipeScoreScreen extends StatelessWidget {
           children: [
             // เพิ่มรูปภาพด้านบนสุด
             Image.network(
-              recipe.imageUrl,
+              widget.recipe.imageUrl,
               height: 300,
               fit: BoxFit.cover,
             ),
             // ต่อด้วยส่วนอื่น ๆ ของหน้า
             ListView.builder(
               physics:
-                  NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
+              NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
               shrinkWrap: true,
-              itemCount: 5,
+              itemCount: widget.recipe.score.length,
               itemBuilder: (context, index) {
-                return _buildScoreCard(context, recipe);
+                return _buildScoreCard(context, widget.recipe, index);
               },
             ),
           ],
@@ -38,7 +45,7 @@ class RecipeScoreScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildScoreCard(BuildContext context, Recipe recipe) {
+  Widget _buildScoreCard(BuildContext context, Recipe recipe, int index) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Card(
@@ -49,7 +56,7 @@ class RecipeScoreScreen extends StatelessWidget {
             children: [
               // รูปโปรไฟล์ของผู้ใช้
               CircleAvatar(
-                backgroundImage: AssetImage('assets/img/profile_picture.png'),
+                backgroundImage: NetworkImage(recipe.score[index].profileUrl),
                 radius: 25,
               ),
               SizedBox(width: 10),
@@ -58,7 +65,7 @@ class RecipeScoreScreen extends StatelessWidget {
                 children: [
                   // ชื่อผู้ใช้
                   Text(
-                    'User Name',
+                    recipe.score[index].name,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -67,7 +74,7 @@ class RecipeScoreScreen extends StatelessWidget {
                   SizedBox(height: 5),
                   // คะแนน
                   Text(
-                    'Score: 9.5',
+                    recipe.score[index].scores.toString(),
                     style: TextStyle(
                       fontSize: 14,
                     ),

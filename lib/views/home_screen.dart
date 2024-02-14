@@ -46,12 +46,31 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
       }
 
+      List<Score> score = [];
+      if (values['score'] != null) {
+        values['score'].forEach((key, data) {
+          print("key");
+          print(key);
+          print("data");
+          print(data);
+          score.add(Score(
+            key: key,
+            id: data['id'],
+            name: data['name'],
+            profileUrl: data['profile_img'],
+            scores: data['scores'],
+          ));
+        });
+      }
+
       Recipe recipe = Recipe(
+        key: event.snapshot.key ?? '',
         title: values['title'],
         description: values['description'],
         imageUrl: values['imageUrl'],
         ingredients: ingredients,
         process: process,
+        score: score,
       );
 
       setState(() {
