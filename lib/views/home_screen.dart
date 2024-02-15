@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ));
         });
       }
+      score.sort((a, b) => b.scores.compareTo(a.scores));
 
       Recipe recipe = Recipe(
         key: event.snapshot.key ?? '',
