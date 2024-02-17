@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_pad/views/home_screen.dart';
+
 import 'login.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +11,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   PageController _pageController = PageController();
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +107,10 @@ class _SplashScreenState extends State<SplashScreen> {
               // ล็อคการเลื่อน
               children: [
                 Container(), // Splash Screen (หน้านี้เป็น Splash Screen)
-                LoginScreen(), // Homescreen (หน้านี้เป็น Homescreen)
+                if (user != null)
+                  HomeScreen() // ถ้ามีการล็อกอินแล้วให้แสดงหน้า HomeScreen
+                else
+                  LoginScreen(), // ถ้ายังไม่ล็อกอินให้แสดงหน้า LoginScreen Homescreen (หน้านี้เป็น Homescreen)
               ],
             ),
           ),
