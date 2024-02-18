@@ -30,17 +30,15 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
         values = event.snapshot.value as Map<dynamic, dynamic>;
       }
 
-      if (values != null) {
-        values.forEach((key, data) {
-          scores.add(Score(
-            key: key,
-            id: data['id'],
-            name: data['name'],
-            profileUrl: data['profile_img'],
-            scores: data['scores'],
-          ));
-        });
-      }
+      values.forEach((key, data) {
+        scores.add(Score(
+          key: key,
+          id: data['id'],
+          name: data['name'],
+          profileUrl: data['profile_img'],
+          scores: data['scores'],
+        ));
+      });
       scores.sort((a, b) => b.scores.compareTo(a.scores));
       setState(() {}); // อัพเดท UI เมื่อโหลดข้อมูลเสร็จสิ้น
     });
@@ -52,27 +50,34 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
       appBar: AppBar(
         title: Text(widget.recipe.title),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // เพิ่มรูปภาพด้านบนสุด
-            Image.network(
-              widget.recipe.imageUrl,
-              height: 300,
-              fit: BoxFit.cover,
-            ),
-            // ต่อด้วยส่วนอื่น ๆ ของหน้า
-            ListView.builder(
-              physics:
-                  NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
-              shrinkWrap: true,
-              itemCount: scores.length,
-              itemBuilder: (context, index) {
-                return _buildScoreCard(context, scores[index], index + 1);
-              },
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // เพิ่มรูปภาพด้านบนสุด
+              Image.network(
+                widget.recipe.imageUrl,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(height: 20),
+              // ต่อด้วยส่วนอื่น ๆ ของหน้า
+              ListView.builder(
+                physics:
+                    NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
+                shrinkWrap: true,
+                itemCount: scores.length,
+                itemBuilder: (context, index) {
+                  return _buildScoreCard(context, scores[index], index + 1);
+                },
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
@@ -80,7 +85,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
 
   Widget _buildScoreCard(BuildContext context, Score score, int index) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Card(
         elevation: 3,
         child: Padding(
@@ -101,27 +106,50 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
                     score.name,
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Coiny',
+                      color: Color(0xFF4F4F4F),
                     ),
                   ),
                   SizedBox(height: 5),
                   // คะแนน
-                  Text(
-                    score.scores.toString(),
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
+
+                  Row(
+                    children: [
+                      Text(
+                        score.scores.toString(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Coiny',
+                          color: Color.fromARGB(255, 255, 153, 36),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Image.asset(
+                        'assets/img/chef_score.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
                   ),
                 ],
               ),
               Spacer(),
               // ตำแหน่งของคะแนน
+
               Text(
                 '#$index', // ตำแหน่งของผู้ให้คะแนน
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  fontFamily: 'Coiny',
+                  color: Color.fromARGB(255, 255, 80, 80),
                 ),
+              ),
+
+              SizedBox(width: 5),
+              Image.asset(
+                'assets/img/scoreplace_icon.png',
+                width: 24,
+                height: 24,
               ),
             ],
           ),

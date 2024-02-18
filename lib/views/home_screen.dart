@@ -97,32 +97,64 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
+            UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.orange,
-              ),
-              child: Text(
-                user!.displayName ?? 'Guest',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+                image: DecorationImage(
+                  image: AssetImage('assets/img/headlogin.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
+              accountName: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(user!.photoURL!),
+                    radius: 20, // ปรับขนาดของ CircleAvatar ตามที่ต้องการ
+                  ),
+                  SizedBox(
+                      width: 8), // เพิ่มระยะห่างระหว่าง CircleAvatar กับ Text
+                  Text(
+                    user!.displayName ?? 'Guest',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+              accountEmail: null,
             ),
             ListTile(
-              title: Text('Profile Cooking'),
+              title: Text(
+                'Profile Cooking',
+                style: TextStyle(
+                  fontFamily: 'Coiny',
+                  color: Color(0xFF4F4F4F),
+                ),
+              ),
               onTap: () {
                 // Handle item 1
               },
             ),
             ListTile(
-              title: Text('Post Recipe'),
+              title: Text(
+                'Post Recipe',
+                style: TextStyle(
+                  fontFamily: 'Coiny',
+                  color: Color(0xFF4F4F4F),
+                ),
+              ),
               onTap: () {
                 // Handle item 2
               },
             ),
             ListTile(
-              title: Text('Sign Out'),
+              title: Text(
+                'Sign Out',
+                style: TextStyle(
+                  fontFamily: 'Coiny',
+                  color: Color.fromARGB(255, 255, 149, 9),
+                ),
+              ),
               onTap: () async {
                 await signOutFromGoogle();
                 Navigator.pushReplacementNamed(context, '/login');
