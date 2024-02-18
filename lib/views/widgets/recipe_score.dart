@@ -1,5 +1,6 @@
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class RecipeScoreScreen extends StatefulWidget {
   final Recipe recipe;
@@ -11,7 +12,39 @@ class RecipeScoreScreen extends StatefulWidget {
 }
 
 class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
+  late List<Score> scores;
 
+  @override
+  void initState() {
+    super.initState();
+    scores = [];
+
+    DatabaseReference reference = FirebaseDatabase.instance
+        .reference()
+        .child('recipes/${widget.recipe.key}/score');
+
+    reference.onValue.listen((event) {
+      scores.clear();
+      Map<dynamic, dynamic> values = {};
+      if (event.snapshot.value != null) {
+        values = event.snapshot.value as Map<dynamic, dynamic>;
+      }
+
+      if (values != null) {
+        values.forEach((key, data) {
+          scores.add(Score(
+            key: key,
+            id: data['id'],
+            name: data['name'],
+            profileUrl: data['profile_img'],
+            scores: data['scores'],
+          ));
+        });
+      }
+      scores.sort((a, b) => b.scores.compareTo(a.scores));
+      setState(() {}); // อัพเดท UI เมื่อโหลดข้อมูลเสร็จสิ้น
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +65,11 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
             // ต่อด้วยส่วนอื่น ๆ ของหน้า
             ListView.builder(
               physics:
-              NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
+                  NeverScrollableScrollPhysics(), // ปิดการเลื่อนของ ListView
               shrinkWrap: true,
-              itemCount: widget.recipe.score.length,
+              itemCount: scores.length,
               itemBuilder: (context, index) {
-                return _buildScoreCard(context, widget.recipe, index);
+                return _buildScoreCard(context, scores[index], index + 1);
               },
             ),
           ],
@@ -45,7 +78,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
     );
   }
 
-  Widget _buildScoreCard(BuildContext context, Recipe recipe, int index) {
+  Widget _buildScoreCard(BuildContext context, Score score, int index) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Card(
@@ -56,7 +89,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
             children: [
               // รูปโปรไฟล์ของผู้ใช้
               CircleAvatar(
-                backgroundImage: NetworkImage(recipe.score[index].profileUrl),
+                backgroundImage: NetworkImage(score.profileUrl),
                 radius: 25,
               ),
               SizedBox(width: 10),
@@ -65,7 +98,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
                 children: [
                   // ชื่อผู้ใช้
                   Text(
-                    recipe.score[index].name,
+                    score.name,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -74,7 +107,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
                   SizedBox(height: 5),
                   // คะแนน
                   Text(
-                    recipe.score[index].scores.toString(),
+                    score.scores.toString(),
                     style: TextStyle(
                       fontSize: 14,
                     ),
@@ -84,7 +117,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
               Spacer(),
               // ตำแหน่งของคะแนน
               Text(
-                '#1', // ตำแหน่งของผู้ให้คะแนน
+                '#$index', // ตำแหน่งของผู้ให้คะแนน
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

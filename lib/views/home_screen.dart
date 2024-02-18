@@ -214,9 +214,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  void navigateToOtherScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => HomeScreen()));
-  }
 }

@@ -1,7 +1,9 @@
-import 'Login/checkAuth.dart';
-import 'Login/with_google.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'Login/checkAuth.dart';
+import 'Login/with_google.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,52 +103,38 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        onPressed: () async {
-                          UserCredential? userCredential =
-                              await signInWithGoogle();
-
-                          if (userCredential != null) {
-                            // ลงทะเบียนหรือเข้าสู่ระบบสำเร็จ
-                            User user = userCredential.user!;
-                            print("User ID: ${user.uid}");
-                            print("Display Name: ${user.displayName}");
-                            print("Email: ${user.email}");
-
-                            // เรียกใช้ฟังก์ชันเพื่อเปลี่ยนหน้า
-                            checkAuth(context);
-                          } else {
-                            // ผู้ใช้ยกเลิกการลงทะเบียนหรือมีข้อผิดพลาด
-                            print("Sign in with Google canceled or failed");
-                          }
-                        },
-                        child: Container(
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                'assets/img/google_icon.png',
-                                height: 30,
-                              ),
-                              SizedBox(width: 15),
-                              Flexible(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Continue with Google',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xff4F4F4F),
-                                      fontFamily: 'Coiny',
+                        onPressed:
+                            _isLoading ? null : () => _signInWithGoogle(),
+                        child: _isLoading
+                            ? CircularProgressIndicator() // แสดง CircularProgressIndicator ถ้ากำลังโหลด
+                            : Container(
+                                height: 50,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/img/google_icon.png',
+                                      height: 30,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
+                                    SizedBox(width: 15),
+                                    Flexible(
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Continue with Google',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Color(0xff4F4F4F),
+                                            fontFamily: 'Coiny',
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
                       ),
                     ),
 
@@ -197,5 +187,28 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    UserCredential? userCredential = await signInWithGoogle();
+
+    if (userCredential != null) {
+      User user = userCredential.user!;
+      print("User ID: ${user.uid}");
+      print("Display Name: ${user.displayName}");
+      print("Email: ${user.email}");
+
+      checkAuth(context);
+    } else {
+      print("Sign in with Google canceled or failed");
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

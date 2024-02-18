@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:food_pad/views/home_screen.dart';
 
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,7 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
               }
             }
           }
-          if(check == false){
+          if (check == false) {
             reference.push().set(scoreData);
           }
         } else {
@@ -175,6 +176,8 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                 onPressed: () {
                   addRecipeScore();
                   Navigator.pop(context); // Pop RecipeStepScreen
+                 
+
                   Navigator.pushReplacementNamed(context, '/recipe_details',
                       arguments: widget.recipe);
                 },
