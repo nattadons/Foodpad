@@ -98,59 +98,65 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
                 radius: 25,
               ),
               SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ชื่อผู้ใช้
-                  Text(
-                    score.name,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Coiny',
-                      color: Color(0xFF4F4F4F),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ชื่อผู้ใช้
+                    Text(
+                      score.name,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Coiny',
+                        color: Color(0xFF4F4F4F),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 5),
-                  // คะแนน
-
-                  Row(
-                    children: [
-                      Text(
-                        score.scores.toString(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Coiny',
-                          color: Color.fromARGB(255, 255, 153, 36),
+                    SizedBox(height: 5),
+                    // คะแนน
+                    Row(
+                      children: [
+                        Text(
+                          score.scores.toString(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Coiny',
+                            color: Color.fromARGB(255, 255, 153, 36),
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5),
-                      Image.asset(
-                        'assets/img/chef_score.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Spacer(),
-              // ตำแหน่งของคะแนน
-
-              Text(
-                '#$index', // ตำแหน่งของผู้ให้คะแนน
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Coiny',
-                  color: Color.fromARGB(255, 255, 80, 80),
+                        SizedBox(width: 5),
+                        Image.asset(
+                          'assets/img/chef_score.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        Flexible(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                '#$index', // ตำแหน่งของผู้ให้คะแนน
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Coiny',
+                                  color: Color.fromARGB(255, 255, 80, 80),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Image.asset(
+                                'assets/img/scoreplace_icon.png',
+                                width: 24,
+                                height: 24,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-
-              SizedBox(width: 5),
-              Image.asset(
-                'assets/img/scoreplace_icon.png',
-                width: 24,
-                height: 24,
-              ),
+              // Spacer(),
+              // ตำแหน่งของคะแนน
             ],
           ),
         ),

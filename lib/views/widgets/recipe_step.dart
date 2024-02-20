@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:food_pad/views/home_screen.dart';
-
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class RecipeStepScreen extends StatefulWidget {
   final Recipe recipe;
@@ -128,7 +125,7 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                       'Congratulations!',
                       style: TextStyle(
                         fontFamily: 'Coiny',
-                        color: Color.fromARGB(255, 54, 52, 52),
+                        color: Color.fromARGB(255, 255, 80, 80),
                       ),
                     ),
                   ),
@@ -176,7 +173,6 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                 onPressed: () {
                   addRecipeScore();
                   Navigator.pop(context); // Pop RecipeStepScreen
-                 
 
                   Navigator.pushReplacementNamed(context, '/recipe_details',
                       arguments: widget.recipe);
