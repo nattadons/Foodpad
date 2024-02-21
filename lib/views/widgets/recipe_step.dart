@@ -201,20 +201,23 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xffFF9900),
         title: Text(
           'Cooking Steps',
-          style: TextStyle(color: Color.fromARGB(255, 66, 61, 61)),
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontFamily: 'Coiny',
+          ),
         ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Color(0xffFF9900),
+            color: Color.fromARGB(255, 255, 253, 249),
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Color(0xffF7F6FF),
       ),
       body: Column(
         children: [
@@ -312,14 +315,18 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                 Text(
                   'Step ${currentStepIndex + 1}:',
                   style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Coiny',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Sriracha',
                   ),
                 ),
                 SizedBox(height: 8),
                 Text(
                   widget.recipe.process[currentStepIndex].name,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Sriracha',
+                  ),
                 ),
               ],
             ),
@@ -341,6 +348,7 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                             countdown =
                                 widget.recipe.process[currentStepIndex].timer;
                           });
+                          startCountdown();
                         } else {
                           showSubmitDialog();
                         }

@@ -1,7 +1,7 @@
-// recipe_card.dart
-import 'package:flutter/material.dart';
-import '../../models/recipe.dart';
 import 'recipe_details.dart';
+import '../../models/recipe.dart';
+import 'package:flutter/material.dart';
+// recipe_card.dart
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
@@ -39,6 +39,7 @@ class RecipeCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Sriracha',
                     ),
                   ),
                   SizedBox(height: 8),
@@ -47,6 +48,9 @@ class RecipeCard extends StatelessWidget {
                     maxLines: 2, // กำหนดจำนวนบรรทัดสูงสุดที่แสดง
                     overflow:
                         TextOverflow.ellipsis, // ให้แสดง ... ถ้าข้อมูลยาวเกินไป
+                    style: TextStyle(
+                      fontFamily: 'Sriracha',
+                    ),
                   ),
                 ],
               ),

@@ -44,7 +44,7 @@ dependencies:
 
 flutter_icons:
   android: true
-  image_path: "image/logo app.png"
+  image_path: "img/logo_app.png"
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +68,9 @@ flutter:
     - family: Coiny
       fonts:
         - asset: fonts/Coiny-Regular.ttf
+    - family: Sriracha
+      fonts:
+        - asset: fonts/Sriracha-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

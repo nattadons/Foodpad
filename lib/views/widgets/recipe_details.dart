@@ -1,9 +1,9 @@
-import 'package:firebase_database/firebase_database.dart';
-
 import 'recipe_step.dart';
 import 'recipe_score.dart';
 import '../../models/recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 // recipe_details.dart
 
 class RecipeDetailsScreen extends StatefulWidget {
@@ -16,7 +16,6 @@ class RecipeDetailsScreen extends StatefulWidget {
 }
 
 class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
-
   late Recipe recipe;
 
   late List<Recipe> recipes;
@@ -27,7 +26,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     recipes = [];
 
     DatabaseReference reference =
-    FirebaseDatabase.instance.reference().child('recipes');
+        FirebaseDatabase.instance.reference().child('recipes');
 
     reference.onChildAdded.listen((event) {
       Map<dynamic, dynamic> values = event.snapshot.value as Map;
@@ -61,13 +60,13 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         });
       }
 
-
       Recipe recipe = Recipe(
         key: event.snapshot.key ?? '',
         title: values['title'],
         description: values['description'],
         imageUrl: values['imageUrl'],
         ingredients: ingredients,
+        type: values['type'],
         process: process,
         score: score,
       );
@@ -82,11 +81,19 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.recipe.title),
+        backgroundColor: const Color(0xffFF9900),
+        title: Text(
+          widget.recipe.title,
+          style: TextStyle(
+            fontFamily: 'Sriracha',
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
+        ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Color(0xffFF9900), // กำหนดสีของไอคอน
+            color: Colors.white,
+            // กำหนดสีของไอคอน
           ),
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
@@ -122,8 +129,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                       Text(
                         'รายละเอียด',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Sriracha',
                         ),
                       ),
                     ],
@@ -131,7 +139,10 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   SizedBox(height: 8),
                   Text(
                     widget.recipe.description,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Sriracha',
+                    ),
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -147,6 +158,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Sriracha',
                         ),
                       ),
                     ],
@@ -156,7 +168,10 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                       return ListTile(
                         title: Text(
                           '${ingredient.name}: ${ingredient.quantity}',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Sriracha',
+                          ),
                         ),
                       );
                     }).toList(),
@@ -174,6 +189,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Sriracha',
                         ),
                       ),
                     ],
@@ -183,7 +199,10 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                       return ListTile(
                         title: Text(
                           process.name,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Sriracha',
+                          ),
                         ),
                       );
                     }).toList(),

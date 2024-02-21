@@ -6,6 +6,7 @@ class Recipe {
   final List<Ingredient> ingredients;
   final List<Process> process;
   final List<Score> score;
+  final String type;
 
   Recipe({
     required this.key,
@@ -15,6 +16,7 @@ class Recipe {
     required this.ingredients,
     required this.process,
     required this.score,
+    required this.type,
   });
 }
 

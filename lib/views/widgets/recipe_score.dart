@@ -48,7 +48,23 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.recipe.title),
+        backgroundColor: const Color(0xffFF9900),
+        title: Text(
+          widget.recipe.title,
+          style: TextStyle(
+            fontFamily: 'Sriracha',
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -107,7 +123,7 @@ class _RecipeScoreScreenState extends State<RecipeScoreScreen> {
                       score.name,
                       style: TextStyle(
                         fontSize: 16,
-                        fontFamily: 'Coiny',
+                        fontFamily: 'Sriracha',
                         color: Color(0xFF4F4F4F),
                       ),
                     ),

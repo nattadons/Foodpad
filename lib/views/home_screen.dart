@@ -1,6 +1,7 @@
 import '../models/recipe.dart';
 import 'Login/with_google.dart';
 import 'widgets/recipe_card.dart';
+import 'widgets/recipe_category.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Recipe> recipes;
 
   User? user = FirebaseAuth.instance.currentUser;
+  bool isSearching = false;
 
   @override
   void initState() {
@@ -70,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         description: values['description'],
         imageUrl: values['imageUrl'],
         ingredients: ingredients,
+        type: values['type'],
         process: process,
         score: score,
       );
@@ -84,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orange,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -108,15 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   CircleAvatar(
                     backgroundImage: NetworkImage(user!.photoURL!),
-                    radius: 20, // ปรับขนาดของ CircleAvatar ตามที่ต้องการ
+                    radius: 20,
                   ),
-                  SizedBox(
-                      width: 8), // เพิ่มระยะห่างระหว่าง CircleAvatar กับ Text
+                  SizedBox(width: 8),
                   Text(
                     user!.displayName ?? 'Guest',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
+                      fontFamily: 'Sriracha',
                     ),
                   ),
                 ],
@@ -195,16 +199,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: searchController,
                 onChanged: (query) {
                   setState(() {
+                    isSearching = query.isNotEmpty;
                     filteredRecipes = recipes.where((recipe) {
                       bool titleContainsQuery = recipe.title
                           .toLowerCase()
                           .contains(query.toLowerCase());
-
                       bool ingredientContainsQuery = recipe.ingredients.any(
                           (ingredient) => ingredient.name
                               .toLowerCase()
                               .contains(query.toLowerCase()));
-
                       return titleContainsQuery || ingredientContainsQuery;
                     }).toList();
                   });
@@ -216,30 +219,105 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 16),
+            Text(
+              'Categories',
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'Coiny',
+                color: Color(0xFF4F4F4F),
+              ),
+            ),
+            SizedBox(height: 16),
             Expanded(
-              child: filteredRecipes.isNotEmpty || searchController.text.isEmpty
-                  ? ListView.builder(
-                      itemCount: filteredRecipes.isNotEmpty
-                          ? filteredRecipes.length
-                          : recipes.length,
-                      itemBuilder: (context, index) {
-                        return RecipeCard(
-                          recipe: filteredRecipes.isNotEmpty
-                              ? filteredRecipes[index]
-                              : recipes[index],
-                        );
-                      },
-                    )
-                  : Center(
-                      child: Text(
-                        'No matching recipes found.',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Coiny',
-                          color: Colors.grey,
-                        ),
-                      ),
+              child: isSearching
+                  ? filteredRecipes.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: filteredRecipes.length,
+                          itemBuilder: (context, index) {
+                            return RecipeCard(recipe: filteredRecipes[index]);
+                          },
+                        )
+                      : Center(
+                          child: Text(
+                            'No recipes found.',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Coiny',
+                              color: Colors.grey,
+                            ),
+                          ),
+                        )
+                  : GridView.count(
+                      crossAxisCount: 2,
+                      children: [
+                        _buildCategoryContainer(
+                            'ต้ม', 'assets/img/category_tom.png'),
+                        _buildCategoryContainer(
+                            'ผัด', 'assets/img/category_pad.png'),
+                        _buildCategoryContainer(
+                            'เเกง', 'assets/img/category_soup.png'),
+                        _buildCategoryContainer(
+                            'ทอด', 'assets/img/category_fried.png'),
+                        _buildCategoryContainer(
+                            'ของหวาน', 'assets/img/category_sweet.png'),
+                      ],
                     ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryContainer(String category, String imagePath) {
+    return GestureDetector(
+      onTap: () {
+        List<Recipe> filteredRecipes =
+            recipes.where((recipe) => recipe.type == category).toList();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryRecipesScreen(
+              filteredRecipes: filteredRecipes,
+              type: category,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(10, 17, 10, 17),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              offset: Offset(0, 0),
+              blurRadius: 5,
+              spreadRadius: -2,
+            ),
+          ],
+          border: Border.all(
+            color: Colors.orange,
+            width: 2,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imagePath,
+              width: 50,
+              height: 50,
+            ),
+            SizedBox(height: 8),
+            Text(
+              category,
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'Sriracha',
+                color: Colors.orange,
+              ),
             ),
           ],
         ),
