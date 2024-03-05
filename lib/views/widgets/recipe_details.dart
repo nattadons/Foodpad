@@ -1,3 +1,4 @@
+import 'recipe_scan.dart';
 import 'recipe_step.dart';
 import 'recipe_score.dart';
 import '../../models/recipe.dart';
@@ -26,7 +27,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     recipes = [];
 
     DatabaseReference reference =
-        FirebaseDatabase.instance.reference().child('recipes');
+    FirebaseDatabase.instance.reference().child('recipes');
 
     reference.onChildAdded.listen((event) {
       Map<dynamic, dynamic> values = event.snapshot.value as Map;
@@ -99,7 +100,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             Navigator.pushNamedAndRemoveUntil(
               context,
               '/home_screen', // ตั้งค่า route ของหน้า HomeScreen ที่คุณต้องการไป
-              (route) => false, // ลบทุกหน้าที่อยู่บน stack ออกไป
+                  (route) => false, // ลบทุกหน้าที่อยู่บน stack ออกไป
             );
           },
         ),
@@ -256,15 +257,27 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             // ส่วนที่ 2: รูปภาพ 1
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Image.asset(
-                  'assets/img/scan_icon.png',
-                  height: 40,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        RecipeScanScreen(recipe: widget.recipe),
+                  ),
+                );
+              },
+              child: Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Image.asset(
+                    'assets/img/scan_icon.png',
+                    height: 40,
+                  ),
                 ),
               ),
             ),
+
             // ส่วนที่ 3: รูปภาพ 2
             GestureDetector(
               onTap: () {

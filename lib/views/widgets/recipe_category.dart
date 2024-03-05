@@ -5,6 +5,8 @@ import 'package:food_pad/views/Login/with_google.dart';
 import 'package:food_pad/views/widgets/recipe_card.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import '../recipe_profile.dart';
+
 class CategoryRecipesScreen extends StatefulWidget {
   final List<Recipe> filteredRecipes;
 
@@ -46,75 +48,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/img/headlogin.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              accountName: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(user!.photoURL!),
-                    radius: 20,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    user!.displayName ?? 'Guest',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              accountEmail: null,
-            ),
-            ListTile(
-              title: Text(
-                'Profile Cooking',
-                style: TextStyle(
-                  fontFamily: 'Coiny',
-                  color: Color(0xFF4F4F4F),
-                ),
-              ),
-              onTap: () {
-                // Handle item 1
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Post Recipe',
-                style: TextStyle(
-                  fontFamily: 'Coiny',
-                  color: Color(0xFF4F4F4F),
-                ),
-              ),
-              onTap: () {
-                // Handle item 2
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Sign Out',
-                style: TextStyle(
-                  fontFamily: 'Coiny',
-                  color: Color.fromARGB(255, 255, 149, 9),
-                ),
-              ),
-              onTap: () async {
-                await signOutFromGoogle();
-                Navigator.pushReplacementNamed(context, '/login');
-              },
-            ),
-          ],
-        ),
-      ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

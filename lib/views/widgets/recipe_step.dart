@@ -41,13 +41,14 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
             timer.cancel();
             print("Countdown completed!");
           }
+          else{
+
+          }
         });
       } else {
         timer.cancel(); // Cancel the timer if the widget is not mounted
       }
     });
-
-    print("Start countdown for 10 seconds...");
   }
 
   void addRecipeScore() async {
@@ -343,14 +344,21 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
                       onPressed: () {
                         if (currentStepIndex <
                             widget.recipe.process.length - 1) {
+
                           setState(() {
                             currentStepIndex++;
                             countdown =
                                 widget.recipe.process[currentStepIndex].timer;
+                            timer.cancel();
                           });
                           startCountdown();
-                        } else {
-                          showSubmitDialog();
+
+                        } else if (currentStepIndex ==
+                            widget.recipe.process.length - 1) {
+                          setState(() {
+                            showSubmitDialog();
+
+                          });
                         }
                       },
                       style: ElevatedButton.styleFrom(

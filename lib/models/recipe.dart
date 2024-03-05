@@ -32,11 +32,23 @@ class Process {
 class Ingredient {
   final String name;
   final String quantity;
+  final bool isChecked;
 
-  Ingredient({
-    required this.name,
-    required this.quantity,
-  });
+  Ingredient(
+      {required this.name, required this.quantity, this.isChecked = false});
+
+  // Add copyWith method
+  Ingredient copyWith({
+    String? name,
+    String? quantity,
+    bool? isChecked,
+  }) {
+    return Ingredient(
+      name: name ?? this.name,
+      quantity: quantity ?? this.quantity,
+      isChecked: isChecked ?? this.isChecked,
+    );
+  }
 }
 
 class Score {
