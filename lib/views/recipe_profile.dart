@@ -15,7 +15,6 @@ class RecipeProfile extends StatefulWidget {
 }
 
 class _RecipeProfileState extends State<RecipeProfile> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +56,20 @@ class _RecipeProfileState extends State<RecipeProfile> {
             child: ListView.builder(
               itemCount: widget.recipes.length,
               itemBuilder: (context, index) {
-                if (widget.recipes[index].score.isNotEmpty &&
-                    widget.recipes[index].score[0].id == widget.user.uid) {
+                if (widget.recipes[index].score.isNotEmpty) {
+                  for (int i = 0; i < widget.recipes[index].score.length; i++) {
+                    if (widget.recipes[index].score[i].id == widget.user.uid) {
+                      print("id ${widget.recipes[index].score[i].id}");
+                      print("name ${widget.recipes[index].score[i].name}");
+                      print("scores ${widget.recipes[index].score[i].scores}");
+                      return RecipeCard(recipe: widget.recipes[index]);
+                    }
+                  }
                   // Only return RecipeCard when the condition is met
-                  print("index ที่ ${index} มี score");
+                  /*print("index ที่ ${index} มี score");
                   print('context = ${widget.recipes[index].score[0].id}');
-                  print('scores = ${widget.recipes[index].score[0].scores}');
-                  return RecipeCard(recipe: widget.recipes[index]);
+                  print('scores = ${widget.recipes[index].score[0].scores}');*/
+                  return Container();
                 } else {
                   // Return an empty container or null when the condition is not met
                   return Container();
