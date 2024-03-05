@@ -1,3 +1,4 @@
+import 'recipe_profile.dart';
 import '../models/recipe.dart';
 import 'Login/with_google.dart';
 import 'widgets/recipe_card.dart';
@@ -136,19 +137,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                // Handle item 1
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Post Recipe',
-                style: TextStyle(
-                  fontFamily: 'Coiny',
-                  color: Color(0xFF4F4F4F),
-                ),
-              ),
-              onTap: () {
-                // Handle item 2
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          RecipeProfile(recipes: recipes, user: user!)),
+                );
               },
             ),
             ListTile(
@@ -255,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         _buildCategoryContainer(
                             'ผัด', 'assets/img/category_pad.png'),
                         _buildCategoryContainer(
-                            'เเกง', 'assets/img/category_soup.png'),
+                            'แกง', 'assets/img/category_soup.png'),
                         _buildCategoryContainer(
                             'ทอด', 'assets/img/category_fried.png'),
                         _buildCategoryContainer(

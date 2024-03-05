@@ -313,7 +313,7 @@ class _RecipeStepScreenState extends State<RecipeStepScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Step ${currentStepIndex + 1}:',
+                  'Step ${currentStepIndex + 1}/${widget.recipe.process.length}',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
