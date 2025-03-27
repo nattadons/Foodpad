@@ -1,46 +1,100 @@
-FoodPad 🍳 - Culinary Adventure App
-📱 Project Overview
+# FoodPad 🍳 - Culinary Adventure App
+
+## 📱 Project Overview
+
 FoodPad is an innovative mobile application that transforms cooking into an exciting and engaging experience. Combining recipe management with gamification, the app makes learning and preparing meals fun and interactive.
-🚀 Technologies
-Development
 
-Flutter
-Dart
-Firebase
+## 🚀 Technologies
 
-Key Features
+### Development
+- Flutter
+- Dart
+- Firebase
 
-Recipe Repository
-Gamification Elements
-User Authentication
-Cloud Storage
+### Key Features
+- Recipe Repository
+- Gamification Elements
+- User Authentication
+- Cloud Storage
 
-✨ Features
-🍽 Recipe Management
+## ✨ Features
 
-Extensive recipe collection
-Detailed cooking instructions
-Ingredient lists
-Cooking time and difficulty levels
+### 🍽 Recipe Management
+- Extensive recipe collection
+- Detailed cooking instructions
+- Ingredient lists
+- Cooking time and difficulty levels
 
-🏆 Gamification
+### 🏆 Gamification
+- Cooking challenges
+- Achievement system
+- Experience points
+- Skill progression
+- Reward mechanisms
 
-Cooking challenges
-Achievement system
-Experience points
-Skill progression
-Reward mechanisms
+### 🔥 Firebase Integration
+- User authentication
+- Cloud database
+- Real-time updates
+- User progress tracking
 
-🔥 Firebase Integration
+## 🛠 Prerequisites
 
-User authentication
-Cloud database
-Real-time updates
-User progress tracking
+- Flutter SDK (2.x or later)
+- Dart SDK
+- Android Studio / VS Code
+- Firebase Account
 
-🛠 Prerequisites
+## 📦 Installation
 
-Flutter SDK (2.x or later)
-Dart SDK
-Android Studio / VS Code
-Firebase Account
+### Clone Repository
+```bash
+git clone https://github.com/[YOUR_USERNAME]/foodpad.git
+cd foodpad
+```
+
+### Install Dependencies
+```bash
+flutter pub get
+```
+
+## 🔧 Firebase Setup
+
+1. Create Firebase Project
+2. Enable Authentication
+3. Set up Firestore Database
+4. Add Firebase Configuration
+   - Download `google-services.json`
+   - Place in `android/app/` directory
+
+## 🌐 Environment Configuration
+
+### Firebase Configuration
+```dart
+// lib/core/config/firebase_config.dart
+class FirebaseConfig {
+  static const apiKey = 'YOUR_FIREBASE_API_KEY';
+  static const projectId = 'YOUR_PROJECT_ID';
+  // Other Firebase configurations
+}
+```
+
+## 🚀 Running the App
+
+### Development Mode
+```bash
+flutter run
+```
+
+### Build Release
+```bash
+flutter build apk
+flutter build ios
+```
+
+## 🧪 Testing
+
+```bash
+flutter test
+```
+
